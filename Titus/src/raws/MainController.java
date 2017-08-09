@@ -6,30 +6,31 @@ import java.util.ArrayList;
 public class MainController {
 	public static void main(String[] args) throws Exception {
 
-		SearchPage sp = new SearchPage();
-		sp.runUI();
 		// Calling the object .. creating a file using constructor
-		fileLists fl = new fileLists();
-
+		TitusInterface sp = new TitusInterface();
+		fileLists fl = new fileLists();	
 		// File listing available to the drive
+		sp.runUI();
+		
 		File[] rootDir; // for saving all the directories
 		rootDir = File.listRoots();
 
 		ArrayList<File> allList = new ArrayList<>(); // All the root directories
 														// will be stored in
 														// array list
-//		if(fl.fileOk)
-		{
+		if(fl.file_exist == false || fl.btn_refresh == true){
 			for (File path : rootDir) {
 //				System.out.println("----Drive " + path.getName());
 				fl.listf(path.getAbsolutePath(), allList);
 			
 			}
+			TitusInterface.cmplt = true;
 		}
-	
+		
 		System.out.println("Searching complete");
-//		 sp.textField_2.setText("Scanning complete");
-//		 sp.close();
+		
+		// Reading Datas from searched file
+		SearchEngine.readData();
 	}
 
 }

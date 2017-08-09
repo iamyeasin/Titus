@@ -9,21 +9,24 @@ import javax.crypto.SealedObject;
 import javax.management.ListenerNotFoundException;
 import javax.swing.filechooser.FileSystemView;
 
-import raws.SearchPage;
-
 public class fileLists {
 	static PrintWriter output;
-	boolean fileOk = true;
+	static public boolean file_exist = false;
+	static public boolean btn_refresh = false;
+	static public File file_directory;
 	
 	public fileLists() throws Exception {
-			
-			File drctry = new File("C:\\Users\\Yeasin\\workspace\\Titus\\directories.txt");
-			if(drctry.exists()) {
-				fileOk = false;
+			try{
+				File drctry = new File("C:\\Users\\Yeasin\\workspace\\Titus\\Directories.txt");
+				if(drctry.exists()) {
+					file_exist = true;
+	//				System.out.println("File already exits");
+				}
+				output = new PrintWriter(drctry);
 			}
-			output = new PrintWriter(drctry);
-			SearchPage.txtScanningResult.setText("Scanning complete"); // NEED a Green signal for checking the search
-			
+			catch(FileNotFoundException e){
+				e.getStackTrace();
+			}
 		} 
 
 	
@@ -37,10 +40,10 @@ public class fileLists {
 //            	output.println("File --- "+file.getAbsolutePath());
                 files.add(file);
 //	            System.out.println("File --- "+file.getAbsolutePath()); 
-                output.println("File --- "+file.getAbsolutePath()); 
+                output.println(file.getAbsolutePath()); 
             } else if (file.isDirectory()) {
 //            	System.out.println("Folder --- "+file.getAbsolutePath()); 
-                output.println("Folder --- " + file.getAbsolutePath()); 
+                output.println(file.getAbsolutePath()); 
                 listf(file.getAbsolutePath(), files);
             }
 
